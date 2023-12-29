@@ -33,7 +33,7 @@ type QueryResponse struct {
 	// The ID of the query to which this is a response.
 	//
 	// Note: Telebot sets this field automatically!
-	QueryID string `json:"inline_query_id"`
+	InlineQueryID string `json:"inline_query_id"`
 
 	// The results for the inline query.
 	Results Results `json:"results"`

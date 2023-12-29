@@ -97,9 +97,9 @@ func (lt *Layout) UnmarshalYAML(data []byte) error {
 				for i, v := range a {
 					s[i] = fmt.Sprint(v)
 				}
-				btn.Button.Data = strings.Join(s, "|")
+				btn.Button.CallbackData = strings.Join(s, "|")
 			} else if s, ok := btn.Data.(string); ok {
-				btn.Button.Data = s
+				btn.Button.CallbackData = s
 			} else {
 				return fmt.Errorf("telebot/layout: invalid callback_data for %s button", k)
 			}
@@ -149,8 +149,8 @@ func (lt *Layout) UnmarshalYAML(data []byte) error {
 				for _, btn := range row {
 					inline := btn.URL != "" ||
 						btn.Unique != "" ||
-						btn.InlineQuery != "" ||
-						btn.InlineQueryChat != "" ||
+						btn.SwitchInlineQuery != "" ||
+						btn.SwitchInlineQueryCurrentChat != "" ||
 						btn.Login != nil ||
 						btn.WebApp != nil
 					inline = !btn.IsReply && inline

@@ -56,9 +56,9 @@ func TestLayout(t *testing.T) {
 	}
 
 	assert.Equal(t, &tele.Button{
-		Unique: "pay",
-		Text:   "Pay",
-		Data:   "1|100.00|USD",
+		Unique:       "pay",
+		Text:         "Pay",
+		CallbackData: "1|100.00|USD",
 	}, lt.ButtonLocale("en", "pay", struct {
 		UserID   int
 		Amount   string
@@ -86,9 +86,9 @@ func TestLayout(t *testing.T) {
 	assert.Equal(t, &tele.ReplyMarkup{
 		InlineKeyboard: [][]tele.InlineButton{{
 			{
-				Unique: "stop",
-				Text:   "Stop",
-				Data:   "1",
+				Unique:       "stop",
+				Text:         "Stop",
+				CallbackData: "1",
 			},
 		}},
 	}, lt.MarkupLocale("en", "inline", 1))

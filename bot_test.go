@@ -626,16 +626,16 @@ func TestBot(t *testing.T) {
 		good := &ReplyMarkup{
 			InlineKeyboard: [][]InlineButton{
 				{{
-					Data: "btn",
-					Text: "Hi Telebot!",
+					CallbackData: "btn",
+					Text:         "Hi Telebot!",
 				}},
 			},
 		}
 		bad := &ReplyMarkup{
 			InlineKeyboard: [][]InlineButton{
 				{{
-					Data: strings.Repeat("*", 65),
-					Text: "Bad Button",
+					CallbackData: strings.Repeat("*", 65),
+					Text:         "Bad Button",
 				}},
 			},
 		}

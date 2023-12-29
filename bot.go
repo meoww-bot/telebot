@@ -777,7 +777,7 @@ func (b *Bot) Respond(c *Callback, resp ...*CallbackResponse) error {
 // be responded to once, subsequent attempts to respond to the same query
 // will result in an error.
 func (b *Bot) Answer(query *Query, resp *QueryResponse) error {
-	resp.QueryID = query.ID
+	resp.InlineQueryID = query.ID
 
 	for _, result := range resp.Results {
 		result.Process(b)

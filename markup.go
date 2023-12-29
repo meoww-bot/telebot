@@ -82,19 +82,19 @@ func (r *ReplyMarkup) copy() *ReplyMarkup {
 
 // Button is a constructor button, which will later become either a reply, or an inline button.
 type Button struct {
-	Unique          string          `json:"unique,omitempty"`
-	Text            string          `json:"text,omitempty"`
-	URL             string          `json:"url,omitempty"`
-	Data            string          `json:"callback_data,omitempty"`
-	InlineQuery     string          `json:"switch_inline_query,omitempty"`
-	InlineQueryChat string          `json:"switch_inline_query_current_chat,omitempty"`
-	Login           *Login          `json:"login_url,omitempty"`
-	WebApp          *WebApp         `json:"web_app,omitempty"`
-	Contact         bool            `json:"request_contact,omitempty"`
-	Location        bool            `json:"request_location,omitempty"`
-	Poll            PollType        `json:"request_poll,omitempty"`
-	User            *ReplyRecipient `json:"request_user,omitempty"`
-	Chat            *ReplyRecipient `json:"request_chat,omitempty"`
+	Unique                       string          `json:"unique,omitempty"`
+	Text                         string          `json:"text,omitempty"`
+	URL                          string          `json:"url,omitempty"`
+	CallbackData                 string          `json:"callback_data,omitempty"`
+	SwitchInlineQuery            string          `json:"switch_inline_query,omitempty"`
+	SwitchInlineQueryCurrentChat string          `json:"switch_inline_query_current_chat,omitempty"`
+	Login                        *Login          `json:"login_url,omitempty"`
+	WebApp                       *WebApp         `json:"web_app,omitempty"`
+	Contact                      bool            `json:"request_contact,omitempty"`
+	Location                     bool            `json:"request_location,omitempty"`
+	Poll                         PollType        `json:"request_poll,omitempty"`
+	User                         *ReplyRecipient `json:"request_user,omitempty"`
+	Chat                         *ReplyRecipient `json:"request_chat,omitempty"`
 }
 
 // Row represents an array of buttons, a row.
@@ -164,9 +164,9 @@ func (r *ReplyMarkup) Text(text string) Button {
 
 func (r *ReplyMarkup) Data(text, unique string, data ...string) Button {
 	return Button{
-		Unique: unique,
-		Text:   text,
-		Data:   strings.Join(data, "|"),
+		Unique:       unique,
+		Text:         text,
+		CallbackData: strings.Join(data, "|"),
 	}
 }
 
@@ -175,11 +175,11 @@ func (r *ReplyMarkup) URL(text, url string) Button {
 }
 
 func (r *ReplyMarkup) Query(text, query string) Button {
-	return Button{Text: text, InlineQuery: query}
+	return Button{Text: text, SwitchInlineQuery: query}
 }
 
 func (r *ReplyMarkup) QueryChat(text, query string) Button {
-	return Button{Text: text, InlineQueryChat: query}
+	return Button{Text: text, SwitchInlineQueryCurrentChat: query}
 }
 
 func (r *ReplyMarkup) Contact(text string) Button {
@@ -271,13 +271,13 @@ type InlineButton struct {
 	// It will be used as a callback endpoint.
 	Unique string `json:"unique,omitempty"`
 
-	Text            string  `json:"text"`
-	URL             string  `json:"url,omitempty"`
-	Data            string  `json:"callback_data,omitempty"`
-	InlineQuery     string  `json:"switch_inline_query,omitempty"`
-	InlineQueryChat string  `json:"switch_inline_query_current_chat"`
-	Login           *Login  `json:"login_url,omitempty"`
-	WebApp          *WebApp `json:"web_app,omitempty"`
+	Text                         string  `json:"text"`
+	URL                          string  `json:"url,omitempty"`
+	CallbackData                 string  `json:"callback_data,omitempty"`
+	SwitchInlineQuery            string  `json:"switch_inline_query,omitempty"`
+	SwitchInlineQueryCurrentChat string  `json:"switch_inline_query_current_chat"`
+	Login                        *Login  `json:"login_url,omitempty"`
+	WebApp                       *WebApp `json:"web_app,omitempty"`
 }
 
 // MarshalJSON implements json.Marshaler interface.
@@ -289,7 +289,7 @@ func (t *InlineButton) MarshalJSON() ([]byte, error) {
 	if t.Login != nil || t.WebApp != nil {
 		return json.Marshal(struct {
 			IB
-			InlineQueryChat string `json:"switch_inline_query_current_chat,omitempty"`
+			SwitchInlineQueryCurrentChat string `json:"switch_inline_query_current_chat,omitempty"`
 		}{
 			IB: IB(*t),
 		})
@@ -300,13 +300,13 @@ func (t *InlineButton) MarshalJSON() ([]byte, error) {
 // With returns a copy of the button with data.
 func (t *InlineButton) With(data string) *InlineButton {
 	return &InlineButton{
-		Unique:          t.Unique,
-		Text:            t.Text,
-		URL:             t.URL,
-		InlineQuery:     t.InlineQuery,
-		InlineQueryChat: t.InlineQueryChat,
-		Login:           t.Login,
-		Data:            data,
+		Unique:                       t.Unique,
+		Text:                         t.Text,
+		URL:                          t.URL,
+		SwitchInlineQuery:            t.SwitchInlineQuery,
+		SwitchInlineQueryCurrentChat: t.SwitchInlineQueryCurrentChat,
+		Login:                        t.Login,
+		CallbackData:                 data,
 	}
 }
 
@@ -328,14 +328,14 @@ func (b Button) Reply() *ReplyButton {
 
 func (b Button) Inline() *InlineButton {
 	return &InlineButton{
-		Unique:          b.Unique,
-		Text:            b.Text,
-		URL:             b.URL,
-		Data:            b.Data,
-		InlineQuery:     b.InlineQuery,
-		InlineQueryChat: b.InlineQueryChat,
-		Login:           b.Login,
-		WebApp:          b.WebApp,
+		Unique:                       b.Unique,
+		Text:                         b.Text,
+		URL:                          b.URL,
+		CallbackData:                 b.CallbackData,
+		SwitchInlineQuery:            b.SwitchInlineQuery,
+		SwitchInlineQueryCurrentChat: b.SwitchInlineQueryCurrentChat,
+		Login:                        b.Login,
+		WebApp:                       b.WebApp,
 	}
 }
 
