@@ -74,8 +74,8 @@ func (lt *Layout) UnmarshalYAML(data []byte) error {
 		// 1. Shortened reply button
 
 		if v, ok := v.(string); ok {
-			btn := tele.Btn{Text: v}
-			lt.buttons[k] = Button{Btn: btn}
+			btn := tele.Button{Text: v}
+			lt.buttons[k] = Button{Button: btn}
 			continue
 		}
 
@@ -97,9 +97,9 @@ func (lt *Layout) UnmarshalYAML(data []byte) error {
 				for i, v := range a {
 					s[i] = fmt.Sprint(v)
 				}
-				btn.Btn.Data = strings.Join(s, "|")
+				btn.Button.Data = strings.Join(s, "|")
 			} else if s, ok := btn.Data.(string); ok {
-				btn.Btn.Data = s
+				btn.Button.Data = s
 			} else {
 				return fmt.Errorf("telebot/layout: invalid callback_data for %s button", k)
 			}

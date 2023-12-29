@@ -28,7 +28,7 @@ func (dlt *DefaultLayout) Callback(k string) tele.CallbackEndpoint {
 }
 
 // Button wraps localized layout function Button using your default locale.
-func (dlt *DefaultLayout) Button(k string, args ...interface{}) *tele.Btn {
+func (dlt *DefaultLayout) Button(k string, args ...interface{}) *tele.Button {
 	return dlt.lt.ButtonLocale(dlt.locale, k, args...)
 }
 

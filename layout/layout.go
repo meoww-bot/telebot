@@ -33,9 +33,9 @@ type (
 
 	// Button is a shortcut for tele.Btn.
 	Button struct {
-		tele.Btn `yaml:",inline"`
-		Data     interface{} `yaml:"data"`
-		IsReply  bool        `yaml:"reply"`
+		tele.Button `yaml:",inline"`
+		Data        interface{} `yaml:"data"`
+		IsReply     bool        `yaml:"reply"`
 	}
 
 	// Markup represents layout-specific markup to be parsed.
@@ -307,7 +307,7 @@ func (lt *Layout) Callback(k string) tele.CallbackEndpoint {
 //	m := b.NewMarkup()
 //	m.Inline(m.Row(btns...))
 //	// Your generated markup is ready.
-func (lt *Layout) Button(c tele.Context, k string, args ...interface{}) *tele.Btn {
+func (lt *Layout) Button(c tele.Context, k string, args ...interface{}) *tele.Button {
 	locale, ok := lt.Locale(c)
 	if !ok {
 		return nil
@@ -318,7 +318,7 @@ func (lt *Layout) Button(c tele.Context, k string, args ...interface{}) *tele.Bt
 
 // ButtonLocale returns a localized button processed with text/template engine.
 // See Button for more details.
-func (lt *Layout) ButtonLocale(locale, k string, args ...interface{}) *tele.Btn {
+func (lt *Layout) ButtonLocale(locale, k string, args ...interface{}) *tele.Button {
 	btn, ok := lt.buttons[k]
 	if !ok {
 		return nil
@@ -352,7 +352,7 @@ func (lt *Layout) ButtonLocale(locale, k string, args ...interface{}) *tele.Btn 
 		return nil
 	}
 
-	return &btn.Btn
+	return &btn.Button
 }
 
 // Markup returns a markup, which locale is dependent on the context.

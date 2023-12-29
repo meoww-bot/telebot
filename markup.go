@@ -80,8 +80,8 @@ func (r *ReplyMarkup) copy() *ReplyMarkup {
 	return &cp
 }
 
-// Btn is a constructor button, which will later become either a reply, or an inline button.
-type Btn struct {
+// Button is a constructor button, which will later become either a reply, or an inline button.
+type Button struct {
 	Unique          string          `json:"unique,omitempty"`
 	Text            string          `json:"text,omitempty"`
 	URL             string          `json:"url,omitempty"`
@@ -98,10 +98,10 @@ type Btn struct {
 }
 
 // Row represents an array of buttons, a row.
-type Row []Btn
+type Row []Button
 
 // Row creates a row of buttons.
-func (r *ReplyMarkup) Row(many ...Btn) Row {
+func (r *ReplyMarkup) Row(many ...Button) Row {
 	return many
 }
 
@@ -109,9 +109,9 @@ func (r *ReplyMarkup) Row(many ...Btn) Row {
 // For example, if you pass six buttons and 3 as the max, you get two rows with
 // three buttons in each.
 //
-// `Split(3, []Btn{six buttons...}) -> [[1, 2, 3], [4, 5, 6]]`
-// `Split(2, []Btn{six buttons...}) -> [[1, 2],[3, 4],[5, 6]]`
-func (r *ReplyMarkup) Split(max int, btns []Btn) []Row {
+// `Split(3, []Button{six buttons...}) -> [[1, 2, 3], [4, 5, 6]]`
+// `Split(2, []Button{six buttons...}) -> [[1, 2],[3, 4],[5, 6]]`
+func (r *ReplyMarkup) Split(max int, btns []Button) []Row {
 	rows := make([]Row, (max-1+len(btns))/max)
 	for i, b := range btns {
 		i /= max
@@ -158,56 +158,56 @@ func (r *ReplyMarkup) Reply(rows ...Row) {
 	r.ReplyKeyboard = replyKeys
 }
 
-func (r *ReplyMarkup) Text(text string) Btn {
-	return Btn{Text: text}
+func (r *ReplyMarkup) Text(text string) Button {
+	return Button{Text: text}
 }
 
-func (r *ReplyMarkup) Data(text, unique string, data ...string) Btn {
-	return Btn{
+func (r *ReplyMarkup) Data(text, unique string, data ...string) Button {
+	return Button{
 		Unique: unique,
 		Text:   text,
 		Data:   strings.Join(data, "|"),
 	}
 }
 
-func (r *ReplyMarkup) URL(text, url string) Btn {
-	return Btn{Text: text, URL: url}
+func (r *ReplyMarkup) URL(text, url string) Button {
+	return Button{Text: text, URL: url}
 }
 
-func (r *ReplyMarkup) Query(text, query string) Btn {
-	return Btn{Text: text, InlineQuery: query}
+func (r *ReplyMarkup) Query(text, query string) Button {
+	return Button{Text: text, InlineQuery: query}
 }
 
-func (r *ReplyMarkup) QueryChat(text, query string) Btn {
-	return Btn{Text: text, InlineQueryChat: query}
+func (r *ReplyMarkup) QueryChat(text, query string) Button {
+	return Button{Text: text, InlineQueryChat: query}
 }
 
-func (r *ReplyMarkup) Contact(text string) Btn {
-	return Btn{Contact: true, Text: text}
+func (r *ReplyMarkup) Contact(text string) Button {
+	return Button{Contact: true, Text: text}
 }
 
-func (r *ReplyMarkup) Location(text string) Btn {
-	return Btn{Location: true, Text: text}
+func (r *ReplyMarkup) Location(text string) Button {
+	return Button{Location: true, Text: text}
 }
 
-func (r *ReplyMarkup) Poll(text string, poll PollType) Btn {
-	return Btn{Poll: poll, Text: text}
+func (r *ReplyMarkup) Poll(text string, poll PollType) Button {
+	return Button{Poll: poll, Text: text}
 }
 
-func (r *ReplyMarkup) User(text string, user *ReplyRecipient) Btn {
-	return Btn{Text: text, User: user}
+func (r *ReplyMarkup) User(text string, user *ReplyRecipient) Button {
+	return Button{Text: text, User: user}
 }
 
-func (r *ReplyMarkup) Chat(text string, chat *ReplyRecipient) Btn {
-	return Btn{Text: text, Chat: chat}
+func (r *ReplyMarkup) Chat(text string, chat *ReplyRecipient) Button {
+	return Button{Text: text, Chat: chat}
 }
 
-func (r *ReplyMarkup) Login(text string, login *Login) Btn {
-	return Btn{Login: login, Text: text}
+func (r *ReplyMarkup) Login(text string, login *Login) Button {
+	return Button{Login: login, Text: text}
 }
 
-func (r *ReplyMarkup) WebApp(text string, app *WebApp) Btn {
-	return Btn{Text: text, WebApp: app}
+func (r *ReplyMarkup) WebApp(text string, app *WebApp) Button {
+	return Button{Text: text, WebApp: app}
 }
 
 // ReplyButton represents a button displayed in reply-keyboard.
@@ -310,7 +310,7 @@ func (t *InlineButton) With(data string) *InlineButton {
 	}
 }
 
-func (b Btn) Reply() *ReplyButton {
+func (b Button) Reply() *ReplyButton {
 	if b.Unique != "" {
 		return nil
 	}
@@ -326,7 +326,7 @@ func (b Btn) Reply() *ReplyButton {
 	}
 }
 
-func (b Btn) Inline() *InlineButton {
+func (b Button) Inline() *InlineButton {
 	return &InlineButton{
 		Unique:          b.Unique,
 		Text:            b.Text,

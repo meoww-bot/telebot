@@ -55,7 +55,7 @@ func TestLayout(t *testing.T) {
 		assert.Equal(t, dur, v.Duration("dur"))
 	}
 
-	assert.Equal(t, &tele.Btn{
+	assert.Equal(t, &tele.Button{
 		Unique: "pay",
 		Text:   "Pay",
 		Data:   "1|100.00|USD",
