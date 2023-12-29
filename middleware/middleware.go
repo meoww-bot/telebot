@@ -3,7 +3,7 @@ package middleware
 import (
 	"errors"
 
-	tele "github.com/meoww-bot/telebot.v3"
+	tele "github.com/meoww-bot/telebot"
 )
 
 // AutoRespond returns a middleware that automatically responds

@@ -1,6 +1,6 @@
 package middleware
 
-import tele "github.com/meoww-bot/telebot.v3"
+import tele "github.com/meoww-bot/telebot"
 
 // RestrictConfig defines config for Restrict middleware.
 type RestrictConfig struct {

@@ -2,7 +2,7 @@
 >"I never knew creating Telegram bots could be so _sexy_!"
 
 ```bash
-go get -u github.com/meoww-bot/telebot.v3
+go get -u github.com/meoww-bot/telebot
 ```
 
 * [Overview](#overview)
@@ -47,7 +47,7 @@ import (
 	"os"
 	"time"
 
-	tele "github.com/meoww-bot/telebot.v3"
+	tele "github.com/meoww-bot/telebot"
 )
 
 func main() {
@@ -75,7 +75,7 @@ Simple, innit? Telebot's routing system takes care of delivering updates
 to their endpoints, so in order to get to handle any meaningful event,
 all you got to do is just plug your function into one of the Telebot-provided
 endpoints. You can find the full list
-[here](https://godoc.org/github.com/meoww-bot/telebot.v3#pkg-constants).
+[here](https://godoc.org/github.com/meoww-bot/telebot#pkg-constants).
 
 There are dozens of supported endpoints (see package consts). Let me know
 if you'd like to see some endpoint or endpoint ideas implemented. This system
@@ -131,7 +131,7 @@ Telebot has a simple and recognizable way to set up middleware — chained funct
 Import a `middleware` package to get some basic out-of-box middleware
 implementations:
 ```go
-import "github.com/meoww-bot/telebot.v3/middleware"
+import "github.com/meoww-bot/telebot/middleware"
 ```
 
 ```go
@@ -287,7 +287,7 @@ b.Send(user, "text", tele.Silent, tele.NoPreview)
 ```
 
 Full list of supported option-flags you can find
-[here](https://pkg.go.dev/github.com/meoww-bot/telebot.v3#Option).
+[here](https://pkg.go.dev/github.com/meoww-bot/telebot#Option).
 
 ## Editable
 If you want to edit some existing message, you don't really need to store the

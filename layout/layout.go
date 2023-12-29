@@ -10,7 +10,7 @@ import (
 	"text/template"
 
 	"github.com/goccy/go-yaml"
-	tele "github.com/meoww-bot/telebot.v3"
+	tele "github.com/meoww-bot/telebot"
 )
 
 type (

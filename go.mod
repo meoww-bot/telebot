@@ -1,4 +1,4 @@
-module github.com/meoww-bot/telebot.v3
+module github.com/meoww-bot/telebot
 
 go 1.13
 
