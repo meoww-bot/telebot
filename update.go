@@ -1,6 +1,8 @@
 package telebot
 
-import "strings"
+import (
+	"strings"
+)
 
 // Update object represents an incoming update.
 type Update struct {
@@ -61,6 +63,9 @@ func (b *Bot) ProcessUpdate(u Update) {
 			if b.handle(m.Text, c) {
 				return
 			}
+		}
+
+		if m.Text != "" && !strings.HasPrefix(m.Text, "/") {
 
 			b.handle(OnText, c)
 			return
@@ -251,12 +256,18 @@ func (b *Bot) ProcessUpdate(u Update) {
 			match := cbackRx.FindAllStringSubmatch(data, -1)
 			if match != nil {
 				unique, payload := match[0][1], match[0][3]
-				if handler, ok := b.handlers["\f"+unique]; ok {
-					u.Callback.Unique = unique
-					u.Callback.Data = payload
-					b.runHandler(handler, c)
-					return
+				for _, handler := range b.handlers {
+					if handler.handlerfunc(c) != nil {
+						if handler.end == "\f"+unique {
+							u.Callback.Unique = unique
+							u.Callback.Data = payload
+							// b.runHandler(handler.handlerfunc, c)
+							return
+						}
+					}
+
 				}
+
 			}
 		}
 
@@ -311,10 +322,19 @@ func (b *Bot) ProcessUpdate(u Update) {
 }
 
 func (b *Bot) handle(end string, c Context) bool {
-	if handler, ok := b.handlers[end]; ok {
-		b.runHandler(handler, c)
-		return true
+
+	for _, handler := range b.handlers {
+		if handler.end == end {
+			if handler.handlerfunc(c) != nil {
+				// b.runHandler(handler.handlerfunc, c)
+				return true
+			}
+		}
 	}
+	// if handler, ok := b.handlers[end]; ok {
+	// 	b.runHandler(handler, c)
+	// 	return true
+	// }
 	return false
 }
 
