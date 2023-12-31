@@ -54,8 +54,9 @@ func (b *Bot) ProcessUpdate(u Update) {
 				}
 
 				m.Payload = match[0][5]
-				if b.handle(command, c) {
-					return
+				// cmd with parameters
+				if m.Payload != "" {
+					b.handle(command, c)
 				}
 			}
 
