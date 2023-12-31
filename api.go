@@ -317,14 +317,15 @@ func verbose(method string, payload interface{}, data []byte) {
 	body = bytes.ReplaceAll(body, []byte(`"{`), []byte(`{`))
 	body = bytes.ReplaceAll(body, []byte(`}"`), []byte(`}`))
 
-	indent := func(b []byte) string {
-		var buf bytes.Buffer
-		json.Indent(&buf, b, "", "  ")
-		return buf.String()
-	}
+	// indent := func(b []byte) string {
+	// 	var buf bytes.Buffer
+	// 	json.Indent(&buf, b, "", "  ")
+	// 	json.Marshal(&buf, b)
+	// 	return buf.String()
+	// }
 
 	log.Printf(
-		"[verbose] telebot: sent request\nMethod: %v\nParams: %v\nResponse: %v",
-		method, indent(body), indent(data),
+		"[verbose] telebot: sent request Method: %v Params: %v Response: %v",
+		method, string(body), string(data),
 	)
 }
