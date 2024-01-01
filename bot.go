@@ -40,6 +40,7 @@ func NewBot(pref Settings) (*Bot, error) {
 		URL:     pref.URL,
 		Poller:  pref.Poller,
 		onError: pref.OnError,
+		StartAt: time.Now(),
 
 		Updates:  make(chan Update, pref.Updates),
 		handlers: []handler{},
@@ -72,6 +73,7 @@ type Bot struct {
 	URL     string
 	Updates chan Update
 	Poller  Poller
+	StartAt time.Time
 	onError func(error, Context)
 
 	group *Group
