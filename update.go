@@ -258,8 +258,8 @@ func (b *Bot) ProcessUpdate(u Update) {
 			if match != nil {
 				unique, payload := match[0][1], match[0][3]
 				for _, handler := range b.handlers {
-					if handler.handlerfunc(c) != nil {
-						if handler.end == "\f"+unique {
+					if handler.end == "\f"+unique {
+						if handler.handlerfunc(c) != nil {
 							u.Callback.Unique = unique
 							u.Callback.Data = payload
 							// b.runHandler(handler.handlerfunc, c)
