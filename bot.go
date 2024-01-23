@@ -157,9 +157,13 @@ func (b *Bot) Group() *Group {
 	return &Group{b: b}
 }
 
-// Get all handers
+// Get all handlers
 func (b *Bot) GetHandlers() map[string][]HandlerFunc {
 	return b.handlers
+}
+
+func (b *Bot) ResetHandler(end string) {
+	delete(b.handlers, end)
 }
 
 // Use adds middleware to the global bot chain.
