@@ -92,11 +92,6 @@ type Bot struct {
 	stopClient  chan struct{}
 }
 
-type handler struct {
-	end         string
-	handlerfunc HandlerFunc
-}
-
 // Settings represents a utility struct for passing certain
 // properties of a bot around and is required to make bots.
 type Settings struct {
