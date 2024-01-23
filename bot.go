@@ -43,7 +43,7 @@ func NewBot(pref Settings) (*Bot, error) {
 		StartAt: time.Now(),
 
 		Updates:  make(chan Update, pref.Updates),
-		handlers: []handler{},
+		handlers: make(map[string][]HandlerFunc),
 		stop:     make(chan chan struct{}),
 
 		synchronous: pref.Synchronous,
@@ -78,7 +78,12 @@ type Bot struct {
 
 	group *Group
 	// handlers    map[string]HandlerFunc
-	handlers    []handler
+
+	// handlers []handler
+
+	// {end:[]HandlerFunc}
+	// one end to multiple HandlerFunc
+	handlers    map[string][]HandlerFunc
 	synchronous bool
 	verbose     bool
 	parseMode   ParseMode
@@ -152,6 +157,11 @@ func (b *Bot) Group() *Group {
 	return &Group{b: b}
 }
 
+// Get all handers
+func (b *Bot) GetHandlers() map[string][]HandlerFunc {
+	return b.handlers
+}
+
 // Use adds middleware to the global bot chain.
 func (b *Bot) Use(middleware ...MiddlewareFunc) {
 	b.group.Use(middleware...)
@@ -192,19 +202,19 @@ func (b *Bot) Handle(endpoint interface{}, h HandlerFunc, m ...MiddlewareFunc) {
 	switch end := endpoint.(type) {
 	case string:
 		// b.handlers[end] = handlerfunc
-		handler := handler{
-			end:         end,
-			handlerfunc: handlerfunc,
-		}
-		b.handlers = append(b.handlers, handler)
+		// handler := handler{
+		// 	end:         end,
+		// 	handlerfunc: handlerfunc,
+		// }
+		b.handlers[end] = append(b.handlers[end], handlerfunc)
 	case CallbackEndpoint:
-		handler := handler{
-			end:         end.CallbackUnique(),
-			handlerfunc: handlerfunc,
-		}
+		// handler := handler{
+		// 	end:         end.CallbackUnique(),
+		// 	handlerfunc: handlerfunc,
+		// }
 		// b.handlers[end.CallbackUnique()] = handlerfunc
 
-		b.handlers = append(b.handlers, handler)
+		b.handlers[end.CallbackUnique()] = append(b.handlers[end.CallbackUnique()], handlerfunc)
 	default:
 		panic("telebot: unsupported endpoint")
 	}
