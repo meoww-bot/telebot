@@ -139,6 +139,28 @@ func (r *ReplyMarkup) Inline(rows ...Row) {
 	r.InlineKeyboard = inlineKeys
 }
 
+func (r *ReplyMarkup) InlineAppend(rows ...Row) {
+	if r.InlineKeyboard == nil {
+		r.Inline(rows...)
+	} else {
+		for i, row := range rows {
+			keys := make([]InlineButton, 0, len(row))
+			for j, btn := range row {
+				btn := btn.Inline()
+				if btn == nil {
+					panic(fmt.Sprintf(
+						"telebot: button row %d column %d is not an inline button",
+						i, j))
+				}
+				keys = append(keys, *btn)
+			}
+			r.InlineKeyboard = append(r.InlineKeyboard, keys)
+		}
+
+	}
+
+}
+
 func (r *ReplyMarkup) Reply(rows ...Row) {
 	replyKeys := make([][]ReplyButton, 0, len(rows))
 	for i, row := range rows {
